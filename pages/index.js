@@ -15,8 +15,9 @@ export default class Page extends Component {
         </Head>
         <SearchInput />
           <style jsx global>{`
-            h1 {
-              
+            body {
+              margin: 0;
+              background: #000;
             }
           `}</style>
       </div>

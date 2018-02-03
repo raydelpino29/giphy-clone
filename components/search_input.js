@@ -14,7 +14,9 @@ export default class SearchInput extends Component {
     this.setState({ search: e.target.value });
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
+    e.preventDefault();
+    this.setState({ data: {} });
     const baseUrl = "http://api.giphy.com/v1/gifs/search?q=";
     const search = `${this.state.search}`;
     const fullUrl = baseUrl + search + "&api_key=CDnD8N7trVBhX8xYpJMTTUwtNF5roJfA";
@@ -26,10 +28,10 @@ export default class SearchInput extends Component {
   }
 
   render() {
-    const assortedGifs = Object.values(this.state.data).map((gif) => {
+    const assortedGifs = Object.values(this.state.data).map((gif, idx) => {
       return (
-        <li>
-          <img src={gif.images.original.url} alt="" />
+        <li key={idx}>
+          <img src={gif.images.downsized.url} alt="" />
             <style jsx>{`
               li {
                 margin: 0 10px;
@@ -50,12 +52,28 @@ export default class SearchInput extends Component {
     return (
       <div>
         <form onSubmit={ this.handleSubmit }>
-          <input onChange={ this.handleChange }/>
+          <div className="search">
+            <input onChange={ this.handleChange }/>
+            <i>
+              <img src="http://www.stickpng.com/assets/images/585e4ae1cb11b227491c3393.png"
+                onClick={ this.handleSubmit } alt=""/>
+            </i>
+          </div>
         </form>
         <GifList gifs={ assortedGifs }/>
         <style jsx>{`
-          h1 {
-            color: purple;
+          form {
+            display: flex;
+            justify-content: center;
+          }
+          .search {
+            display: flex;
+          }
+          img {
+            height: 100%;
+          }
+          i {
+            height: 20px;
           }
         `}</style>
       </div>
